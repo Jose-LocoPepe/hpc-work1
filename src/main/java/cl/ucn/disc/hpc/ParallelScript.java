@@ -17,13 +17,22 @@ class SecuencialRun implements Runnable {
     public void run() {
         int count = 0;
         int i = 1;
+        long start = System.currentTimeMillis();
         while (count < n) {
             if (isPrime(i)) {
                 count++;
             }
             i++;
+            System.out.println("Count: " + count);
             cant++;
         }
+
+        long end = System.currentTimeMillis();
+        System.out.println("------MULTI THREAD THREADS--------");
+        System.out.println("Time of ejecution: " + (end - start) + " ms");
+        System.out.println("Result: " + getCant());
+        System.out.println("-----------------------------------------");
+        System.out.println("Finished all threads");
     }
     /**
      * isPrime Function!
@@ -71,21 +80,16 @@ class SecuencialRun implements Runnable {
 }
 
 public class ParallelScript {
-
-    public static float totalPrimes;
-    static final int[] countfinal = {0};
-
-
     /**
      * The Main.
      */
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-        int threads = 4;
+        int threads = 1;
 
         long start = System.currentTimeMillis();
-        ExecutorService executorMulti = Executors.newFixedThreadPool(threads);  // Creates a //ExecutorService object having a pool of 10 threads.
+        ExecutorService executorMulti = Executors.newFixedThreadPool(threads);
         System.out.println("Starting");
-        SecuencialRun r1 = new SecuencialRun( 500000000);
+        SecuencialRun r1 = new SecuencialRun( 200000);
 
         executorMulti.execute(r1);
 
@@ -93,12 +97,6 @@ public class ParallelScript {
         executorMulti.shutdown();
         System.out.println("Done");
 
-        long end = System.currentTimeMillis();
-        System.out.println("------MULTI THREAD WITH "+ threads + " THREADS--------");
-        System.out.println("Time of ejecution: " + (end - start) + " ms");
-        System.out.println("Result: " + r1.getCant());
-        System.out.println("-----------------------------------------");
-        System.out.println("Finished all threads");
     }
 
 
